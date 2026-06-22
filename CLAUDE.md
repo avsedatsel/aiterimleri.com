@@ -31,5 +31,12 @@ Türkiye'deki emlakçılar için TKGM kadastro verisiyle parsel tanıtım videos
 ## Durum
 **Faz 1 / Adım 1 tamamlandı:** Ana sayfa, dark/light mod, PWA, mobil uyumlu tasarım, parsel formu (Sorgula → "Sorgulanıyor...").
 
+## Form Açılış Davranışı
+- İlk açılışta tüm alanlar **boş** gelir (sabit test parseli kaldırıldı).
+- İl/ilçe akıllı hatırlama: `localStorage` `sd_search_history` (son 20 arama, `{il, ilce, timestamp}`).
+  En sık il/ilçe kombinasyonu %70+ ise o, değilse en son kullanılan otomatik doldurulur.
+- Köy/mahalle, ada, parsel her zaman boş gelir.
+- Mantık: `src/lib/searchHistory.ts`.
+
 ## Test Parseli
-Çanakkale / Gökçeada / Çınarlı / Ada 193 / Parsel 61 (formda varsayılan).
+Çanakkale / Gökçeada / Çınarlı / Ada 193 / Parsel 61 (artık elle girilir).

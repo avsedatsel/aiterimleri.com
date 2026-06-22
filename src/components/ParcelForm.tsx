@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PROVINCES } from "@/lib/provinces";
+import { readHistory, recordSearch, suggestIlIlce } from "@/lib/searchHistory";
 
 interface ParcelInput {
   il: string;
@@ -11,18 +12,26 @@ interface ParcelInput {
   parsel: string;
 }
 
-// Faz 1 test parseli: Çanakkale / Gökçeada / Çınarlı / Ada 193 / Parsel 61
-const DEFAULTS: ParcelInput = {
-  il: "Çanakkale",
-  ilce: "Gökçeada",
-  mahalle: "Çınarlı",
-  ada: "193",
-  parsel: "61",
+// İlk açılışta tüm alanlar boş (hidrasyon uyumu için sunucuda da boş)
+const EMPTY: ParcelInput = {
+  il: "",
+  ilce: "",
+  mahalle: "",
+  ada: "",
+  parsel: "",
 };
 
 export default function ParcelForm() {
-  const [form, setForm] = useState<ParcelInput>(DEFAULTS);
+  const [form, setForm] = useState<ParcelInput>(EMPTY);
   const [loading, setLoading] = useState(false);
+
+  // Açılışta geçmişe göre il/ilçe öner; köy/mahalle, ada, parsel her zaman boş
+  useEffect(() => {
+    const { il, ilce } = suggestIlIlce(readHistory());
+    if (il || ilce) {
+      setForm((prev) => ({ ...prev, il, ilce }));
+    }
+  }, []);
 
   function update<K extends keyof ParcelInput>(key: K, value: string) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -31,6 +40,8 @@ export default function ParcelForm() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
+    // Başarılı parsel sorgulama sonrası il/ilçe'yi geçmişe kaydet
+    recordSearch(form.il, form.ilce);
     // Faz 1: TKGM sorgusu henüz bağlı değil — sadece durum gösteriliyor.
   }
 
@@ -48,6 +59,9 @@ export default function ParcelForm() {
           onChange={(e) => update("il", e.target.value)}
           className={inputClass}
         >
+          <option value="" disabled>
+            İl seçin
+          </option>
           {PROVINCES.map((p) => (
             <option key={p} value={p}>{p}</option>
           ))}
