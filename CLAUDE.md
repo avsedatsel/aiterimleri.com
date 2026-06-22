@@ -18,7 +18,8 @@ Türkiye'deki emlakçılar için TKGM kadastro verisiyle parsel tanıtım videos
 ## Proje Yapısı
 - `src/app/layout.tsx` — kök layout, tema FOUC scripti, PWA metadata
 - `src/app/page.tsx` — ana parsel ekranı
-- `src/components/` — Header, ParcelForm, ThemeToggle, InstallButton, ServiceWorkerRegister
+- `src/components/` — Header, ParcelForm, ContentPanel, ThemeToggle, InstallButton, ServiceWorkerRegister
+- `ContentPanel.tsx` — seslendirme metni textarea + canlı karakter sayacı ve video süre tahmini (22 krk/sn, renk kodlu, max 1400 krk)
 - `src/lib/provinces.ts` — 81 il listesi
 - `public/manifest.json`, `public/sw.js`, `public/icons/`
 - `scripts/gen-icons.mjs` — PWA ikonlarını SVG'den üreten script (`node scripts/gen-icons.mjs`)

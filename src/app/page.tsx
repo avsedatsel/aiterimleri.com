@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import ParcelForm from "@/components/ParcelForm";
+import ContentPanel from "@/components/ContentPanel";
 
 export default function Home() {
   return (
@@ -23,6 +24,11 @@ export default function Home() {
         <section className="rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-7">
           <h2 className="mb-5 text-lg font-semibold">Parsel Sorgulama</h2>
           <ParcelForm />
+        </section>
+
+        <section className="mt-6 rounded-2xl border border-border bg-surface p-5 shadow-sm sm:p-7">
+          <h2 className="mb-5 text-lg font-semibold">Video İçeriği</h2>
+          <ContentPanel />
         </section>
 
         <p className="mt-6 text-center text-xs text-muted">
